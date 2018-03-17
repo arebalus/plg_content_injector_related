@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.2" type="plugin" group="content" method="upgrade">
+  <name>plg_content_injector_related</name>
+  <version>1.0</version>
+  <creationDate>March 17th, 2018</creationDate>
+  <description>PLG_CONTENT_INJECTOR_RELATED_XML_DESCRIPTION</description>
+  <author>Magnus Arebalus</author>
+  <authorEmail>arebalus.NO.SPAM@gmail.com</authorEmail>
+  <authorUrl>github.com/arebalus</authorUrl>
+  <copyright>Copyright (C) 2018 Magnus Arebalus Marcus. All rights reserved.</copyright>
+  <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+  <files>
+    <filename plugin="injector_related">injector_related.php</filename>
+    <filename>index.html</filename>
+    <folder>helpers</folder>
+    <folder>language</folder>
+    <folder>tmpl</folder>
+  </files>
+  <updateservers>
+    <server priority="2" type="extension" name="Injector Related updates"><![CDATA[https://raw.githubusercontent.com/arebalus/plg_content_injector_related/master/version.xml]]></server>
+  </updateservers>
+  <config>
+    <fields name="params">
+      <fieldset name="basic">
+        <field 
+			type="radio" 
+			name="enable" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_ENABLE_LABEL" 
+			default="1" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_ENABLE_DESC"
+			class="btn-group btn-group-yesno" 
+		>
+			<option value="1">JENABLED</option>
+			<option value="0">JDISABLED</option>
+		</field>
+		<field
+			type="number"
+			name="number"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_NUMBER_LABEL"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_NUMBER_DESC"
+			default="3"
+			min="1"
+			max="5"
+			step="1"
+			onchange=""
+		/>
+        <field 
+			type="list" 
+			name="relation1" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_RELATION1_LABEL" 
+			default="key" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_RELATION1_DESC"
+		>
+			<option value="key">PLG_CONTENT_INJECTOR_RELATED_KEYWORDS</option>
+			<option value="tag">PLG_CONTENT_INJECTOR_RELATED_TAGS</option>
+			<option value="cat">PLG_CONTENT_INJECTOR_RELATED_CATEGORY</option>
+			<option value="aut">PLG_CONTENT_INJECTOR_RELATED_AUTHOR</option>
+		</field>
+        <field 
+			type="list" 
+			name="relation2" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_RELATION2_LABEL" 
+			default="non" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_RELATION2_DESC"
+		>
+			<option value="non">PLG_CONTENT_INJECTOR_RELATED_NONE</option>
+			<option value="key">PLG_CONTENT_INJECTOR_RELATED_KEYWORDS</option>
+			<option value="tag">PLG_CONTENT_INJECTOR_RELATED_TAGS</option>
+			<option value="cat">PLG_CONTENT_INJECTOR_RELATED_CATEGORY</option>
+			<option value="aut">PLG_CONTENT_INJECTOR_RELATED_AUTHOR</option>
+		</field>
+        <field 
+			type="list" 
+			name="relation3" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_RELATION3_LABEL" 
+			default="non" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_RELATION3_DESC"
+			showon="relation2!:non"
+		>
+			<option value="non">PLG_CONTENT_INJECTOR_RELATED_NONE</option>
+			<option value="key">PLG_CONTENT_INJECTOR_RELATED_KEYWORDS</option>
+			<option value="tag">PLG_CONTENT_INJECTOR_RELATED_TAGS</option>
+			<option value="cat">PLG_CONTENT_INJECTOR_RELATED_CATEGORY</option>
+			<option value="aut">PLG_CONTENT_INJECTOR_RELATED_AUTHOR</option>
+		</field>
+        <field 
+			type="list" 
+			name="relation4" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_RELATION4_LABEL" 
+			default="non" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_RELATION4_DESC"
+			showon="relation2!:non[AND]relation3!:non"
+		>
+			<option value="non">PLG_CONTENT_INJECTOR_RELATED_NONE</option>
+			<option value="key">PLG_CONTENT_INJECTOR_RELATED_KEYWORDS</option>
+			<option value="tag">PLG_CONTENT_INJECTOR_RELATED_TAGS</option>
+			<option value="cat">PLG_CONTENT_INJECTOR_RELATED_CATEGORY</option>
+			<option value="aut">PLG_CONTENT_INJECTOR_RELATED_AUTHOR</option>
+		</field>
+	</fieldset>
+	<fieldset name="where">
+        <field 
+			type="radio" 
+			name="filter" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_FILTER_LABEL" 
+			default="exc" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_FILTER_DESC"
+			class="btn-group" 
+			
+		>
+			<option value="inc">PLG_CONTENT_INJECTOR_RELATED_INCLUDE</option>
+			<option value="exc">PLG_CONTENT_INJECTOR_RELATED_EXCLUDE</option>
+		</field>
+		<field 
+			name="categories" 
+			type="category" 
+			extension="com_content" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_CATEGORIES_LABEL"
+			default=""
+			showroot="true"
+			published="1"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_CATEGORIES_DESC"
+			multiple="true"
+			
+		/>
+        <field 
+			type="list" 
+			name="mode" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_MODE_LABEL" 
+			default="p" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_MODE_DESC"
+			
+		>
+			<option value="p">PLG_CONTENT_INJECTOR_RELATED_PAR</option>
+			<option value="div">PLG_CONTENT_INJECTOR_RELATED_DIV</option>
+		</field>
+		<field
+			type="text"
+			name="class"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_CLASS_LABEL"
+			default=""
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_CLASS_DESC"
+			showon="mode:div"
+		/>
+		<field
+			type="list"
+			name="location"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_LOCATION_LABEL"
+			default="mid"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_LOCATION_DESC"
+			
+		>
+			<option value="top">PLG_CONTENT_INJECTOR_RELATED_TOP</option>
+			<option value="bot">PLG_CONTENT_INJECTOR_RELATED_BOTTOM</option>
+			<option value="mid">PLG_CONTENT_INJECTOR_RELATED_MIDDLE</option>
+		</field>
+		<field
+			type="list"
+			name="position"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_POSITION_LABEL"
+			default="center"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_POSITION_DESC"
+			showon="location:mid"
+		>
+			<option value="center">PLG_CONTENT_INJECTOR_RELATED_CENTER</option>
+			<option value="1">PLG_CONTENT_INJECTOR_RELATED_1</option>
+			<option value="2">PLG_CONTENT_INJECTOR_RELATED_2</option>
+			<option value="3">PLG_CONTENT_INJECTOR_RELATED_3</option>
+			<option value="4">PLG_CONTENT_INJECTOR_RELATED_4</option>
+			<option value="5">PLG_CONTENT_INJECTOR_RELATED_5</option>
+			<option value="6">PLG_CONTENT_INJECTOR_RELATED_6</option>
+			<option value="7">PLG_CONTENT_INJECTOR_RELATED_7</option>
+			<option value="8">PLG_CONTENT_INJECTOR_RELATED_8</option>
+			<option value="9">PLG_CONTENT_INJECTOR_RELATED_9</option>
+			<option value="10">PLG_CONTENT_INJECTOR_RELATED_10</option>
+			<option value="-1">PLG_CONTENT_INJECTOR_RELATED_M1</option>
+			<option value="-2">PLG_CONTENT_INJECTOR_RELATED_M2</option>
+			<option value="-3">PLG_CONTENT_INJECTOR_RELATED_M3</option>
+			<option value="-4">PLG_CONTENT_INJECTOR_RELATED_M4</option>
+			<option value="-5">PLG_CONTENT_INJECTOR_RELATED_M5</option>
+			<option value="-6">PLG_CONTENT_INJECTOR_RELATED_M6</option>
+			<option value="-7">PLG_CONTENT_INJECTOR_RELATED_M7</option>
+			<option value="-8">PLG_CONTENT_INJECTOR_RELATED_M8</option>
+			<option value="-9">PLG_CONTENT_INJECTOR_RELATED_M9</option>
+			<option value="-10">PLG_CONTENT_INJECTOR_RELATED_M10</option>
+		</field>
+      </fieldset>
+	  <fieldset name="advanced">
+        <field
+        	type="filelist"
+        	name="layout"
+        	label="PLG_CONTENT_INJECTOR_RELATED_FIELD_LAYOUT_LABEL"
+        	description="PLG_CONTENT_INJECTOR_RELATED_FIELD_LAYOUT_DESC"
+        	directory="plugins/content/injector_related/tmpl"
+        	default="default.php"
+        	hide_none="true"
+        	hide_default="true"
+        	filter=".php$"
+		 />
+	  </fieldset> 
+    </fields>
+  </config>
+</extension>
