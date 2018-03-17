@@ -35,11 +35,15 @@ You can too set which categories will the joomla's related articles will be plac
 
 Since maybe you want to hide or show manually the related content articles, Injector Related offers too an inline plugin syntax that can be included in each content article and will be parsed by this Joomla plugin to override the global configuration of the plugin.
 
+
 <br /> [:mag: Back to Index](#index)
 
 ## Download
 
-[:arrow_down: **Download ZIP**](../../archive/master.zip)
+Please feel free to browse and download any of our releases or the master pack. Please notice that master pack may not be ready for production.
+
+[:arrow_right: **View Releases**](../../releases)
+
 
 <br /> [:mag: Back to Index](#index)
 
@@ -57,11 +61,10 @@ Read the Joomla! documentation on how to [install an extension](https://docs.joo
 
 I have successfully tested the installation of this plugin in a fresh Joomla installation. So, if you are experiencing troubles to install, ask for support in the [Joomla official forums](http://forum.joomla.org/).
 
+
 <br /> [:mag: Back to Index](#index)
 
 ## Documentation
-
-:warning: **IN CONSTRUCTION** :warning:
 
 ### General Params
 
@@ -71,6 +74,9 @@ I have successfully tested the installation of this plugin in a fresh Joomla ins
 - **2nd Relation**: The second relation that an article must have with the shown one in order to be included in the related content list if not enough articles are found by the previous relation. If this parameter is set to None the no further relations will be included.
 - **3rd Relation**: The third relation that an article must have with the shown one in order to be included in the related content list if not enough articles are found by the previous relation. If this parameter is set to None the no further relations will be included.
 - **4th Relation**: The fourth relation that an article must have with the shown one in order to be included in the related content list if not enough articles are found by the previous relation.
+
+
+<br /> [:mag: Back to Index](#index)
 
 ### Placement Params
 
@@ -84,11 +90,20 @@ I have successfully tested the installation of this plugin in a fresh Joomla ins
   - Use _"Division"_ if most of your content articles use `<div>...</div>` to organize their content blocks. If you use **nested divisions**, like in the case of bootstrap, which uses them to generate a grid, then you should want to set the _Class_ parameter.
 - **Class**: Since the divisions `<div>...</div>` can be nested within the HTML code, then it could be helpful to count only certain ones. So you can set the class of the divisions that will be counted to determine the right placement of the plugin result. 
 - **Location**: Set where in the content article text will be placed the plugin result. You can select _"Top of Article"_, _"Bottom of Article"_ or _"Middle of Article"_. Regarding _"Middle of Article"_, you may use the _"Position"_ paramenter in order to set more specifically the point of the article text to place the plugin result.
-- **Position**
+- **Position**: If the Location parameter is set to Middle, then you may want to fine-tune where in the middle of the content is placed the related articles list. Notice that Injector Related counts the number of HTML tags regardless of the ammount of text they may contain.
+  - Center: the plugin will calculate the half of the HTML tags occurrence and inject the related articles list at such point.
+  - After Xth element from top: the plugin will count the HTML tags starting from the top of the article and will inject the related articles list after such element. In case there are not enough elements, then the output will be placed after the last element.
+  - Before Xth element from bottom: the plugin will count the HTML tags starting from the bottom of the article and will inject the related articles list before such element. In case there are not enough elements, then the output will be placed before the first element.
+
+
+<br /> [:mag: Back to Index](#index)
 
 ### Advanced Params
 
-- **Layout**
+- **Layout**: Change the appearance of the plugin output choosing one of the available layouts.
+
+
+<br /> [:mag: Back to Index](#index)
 
 ### Override Configuration
 
@@ -255,9 +270,13 @@ Use the table below to identify the _attribute_ name for each parameter and its 
   </tr>
 </table>
 
+
+<br /> [:mag: Back to Index](#index)
+
 ### Override Design
 
 Since the Injector Related is a content plugin, I'm sure you may want to customize its appearance at the point it renders the related articles list. So, yes, the plugin is ready for layout overrides and you may follow the instructions at the Joomla documentation on [Layout Overrides](https://docs.joomla.org/Layout_Overrides_in_Joomla#Plugin_Alternative_Layouts_.28Overriding_a_Plugin.29) to override the default template.
+
 
 <br /> [:mag: Back to Index](#index)
 
@@ -290,6 +309,9 @@ Once you have copied the content of the original files to the **new language fil
 #### Sharing Your Translations
 
 If you have translated the plugin to your own language and you want to share your translation, please contact me as stated in the [Support](#support) area. I would be glad to credit your work at the [Credits](#credits) section of this documentation.
+
+
+<br /> [:mag: Back to Index](#index)
 
 ## Support
 
