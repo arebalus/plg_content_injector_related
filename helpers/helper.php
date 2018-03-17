@@ -91,16 +91,23 @@ class plgContentInjector_relatedHelper
 					$tags	= $db->loadColumn();
 					
 					$query	->clear();
-					$query	->join('', 
-								$db->quoteName('#__contentitem_tag_map','tm')
-								.'ON '
-								.$db->quoteName('tm.content_item_id')
-								.' = '
-								.$db->quoteName('c.id')
-								)
-							->where($db->quoteName('tm.tag_id').' IN ('.implode(',',$tags).')')
-							->group($db->quoteName('c.id'));
-							;
+					if (is_array($tags) && count($tags))
+					{
+						$query	->join('', 
+									$db->quoteName('#__contentitem_tag_map','tm')
+									.'ON '
+									.$db->quoteName('tm.content_item_id')
+									.' = '
+									.$db->quoteName('c.id')
+									)
+								->where($db->quoteName('tm.tag_id').' IN ('.implode(',',$tags).')')
+								->group($db->quoteName('c.id'));
+								;
+					}
+					else
+					{
+						$doQuery = false;
+					}
 					break;
 				case 'cat':
 					$query	->where($db->quoteName('c.catid').'='.$article->catid);
