@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.2" type="plugin" group="content" method="upgrade">
+<extension version="3.4" type="plugin" group="content" method="upgrade">
   <name>plg_content_injector_related</name>
-  <version>1.0</version>
+  <version>1.1</version>
   <creationDate>March 17th, 2018</creationDate>
   <description>PLG_CONTENT_INJECTOR_RELATED_XML_DESCRIPTION</description>
   <author>Magnus Arebalus</author>
@@ -16,6 +16,11 @@
     <folder>language</folder>
     <folder>tmpl</folder>
   </files>
+  <media folder="media" destination="plg_content_injector_related">
+    <filename>default.jpg</filename>
+    <filename>placeholder.png</filename>
+    <filename>index.html</filename>
+  </media>
   <updateservers>
     <server priority="2" type="extension" name="Injector Related updates"><![CDATA[https://raw.githubusercontent.com/arebalus/plg_content_injector_related/master/version.xml]]></server>
   </updateservers>
@@ -196,6 +201,16 @@
         	hide_none="true"
         	hide_default="true"
         	filter=".php$"
+		 />
+		 <field 
+		 	type="media"
+		 	name="default-image"
+		 	label="PLG_CONTENT_INJECTOR_RELATED_FIELD_DEFAULT_IMAGE_LABEL"
+		 	description="PLG_CONTENT_INJECTOR_RELATED_FIELD_DEFAULT_IMAGE_DESC"
+		 	directory=""
+		 	preview="true"
+		 	default="media/plg_content_injector_related/default.jpg"
+		 	showon="layout:with-image.php"
 		 />
 	  </fieldset> 
     </fields>

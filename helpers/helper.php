@@ -1,6 +1,6 @@
 <?php 
 /**
- * @Project   Content - Injector Related 1.0
+ * @Project   Content - Injector Related 1.1
  * @author    Magnus Arebalus
  * @email     arebalus.NO.SPAM@gmail.com
  * @website   github.com/arebalus
@@ -66,7 +66,7 @@ class plgContentInjector_relatedHelper
 		}
 	}
 	
-	private static function _getRelatedList(&$article,$config,$relation=1,$number=3)
+	private static function _getRelatedList(&$article,$config,$relation=1,$number=3,$already=array())
 	{
 		$return	= array();
 		$rows	= array();
@@ -149,6 +149,9 @@ class plgContentInjector_relatedHelper
 								.','.$db->quoteName('c.title','title')
 								.','.$db->quoteName('c.introtext','introtext')
 								.','.$db->quoteName('c.catid','catid')
+								.','.$db->quoteName('c.images','images')
+								.','.$db->quoteName('c.introtext','introtext')
+								.','.$db->quoteName('c.fulltext','fulltext')
 								)
 						->from ($db->quoteName('#__content','c'))
 						->where($db->quoteName('c.id').'<>'.$article->id)
@@ -157,17 +160,60 @@ class plgContentInjector_relatedHelper
 						->where('('.$db->quoteName('c.publish_down').' > '.$now.' OR '.$db->quoteName('c.publish_down').'='.$null.')' )
 						->setLimit(intval($number))
 						;
+				if (is_array($already) && count ($already))
+				{
+					$query ->where($db->quoteName('c.id').' NOT IN ('.implode(',',$already).')');
+				}
 				# To-Do: Add more sorting options
 				$query	->order($db->quoteName('c.publish_up').' DESC');
 				$db->setQuery($query);
 				$rows = $db->loadObjectList();
 			}		
 			
+			$selIds = array();
+			
+			//die (JPATH_ROOT);
 			if (is_array($rows))
 			{
+				for ($i=0,$n=count($rows);$i<$n;$i++)
+				{
+					$selIds[]	= $rows[$i]->id;
+					$images 	= (array)json_decode($rows[$i]->images);
+					if (
+							isset($images['image_intro']) 
+						&& 	strlen($images['image_intro']) 
+						//&&	file_exists(JPATH_ROOT.'/'.$images['image_intro'])
+						)
+					{
+						$rows[$i]->image = $images['image_intro'];
+					}
+					elseif (
+							isset($images['image_fulltext']) 
+						&& 	strlen($images['image_fulltext']) 
+						//&&	file_exists(JPATH_ROOT.'/'.$images['image_fulltext'])
+						)
+					{
+						$rows[$i]->image = $images['image_fulltext'];
+					}
+					else
+					{
+						$txt	= $rows[$i]->introtext.$rows[$i]->fulltext;
+						$ptrn	= '/<img\s.*?src=(?:\'|")([^\'">]+)(?:\'|")/si';
+						if (preg_match($ptrn,$txt,$imgMatch))
+						{
+							$rows[$i]->image = html_entity_decode($imgMatch[1]);
+						}
+						else
+						{
+							$rows[$i]->image = $config['default-image'];
+						} 
+						
+					}				
+				}
+				$already = array_merge($already,$selIds);
 				if (count($rows) < $number && $relation < 4)
 				{
-					$rows = array_merge($rows,self::_getRelatedList($article,$config,$relation+1,$number-count($rows)));
+					$rows = array_merge($rows,self::_getRelatedList($article,$config,$relation+1,$number-count($rows),$already));
 				}
 				$return = $rows;
 			}
@@ -264,6 +310,17 @@ class plgContentInjector_relatedHelper
 							$temp	= "\r\n\r\n".$temp."\r\n\r\n";
 							$article->text = $temp;
 						}
+						else
+						{
+							if ($config['position']<0)
+							{
+								$article->text = $text.$article->text;
+							}
+							else
+							{
+								$article->text = $article->text.$text;
+							}
+						}
 					}
 				}
 				break;
@@ -321,6 +378,15 @@ class plgContentInjector_relatedHelper
 					}
 					$valid['layout'] = $v;
 					break;
+				case 'default-image':
+					if (
+						 	strlen($v) 
+						&&	file_exists(JPATH_ROOT.'/'.$v)
+						)
+					{
+						$valid['default-image'] = JUri::base(true).'/'.$v;
+					}
+					
 				default:
 					break;
     		}
