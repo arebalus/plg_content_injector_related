@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.4" type="plugin" group="content" method="upgrade">
   <name>plg_content_injector_related</name>
-  <version>1.1</version>
+  <version>1.2</version>
   <creationDate>March 17th, 2018</creationDate>
   <description>PLG_CONTENT_INJECTOR_RELATED_XML_DESCRIPTION</description>
   <author>Magnus Arebalus</author>
@@ -20,6 +20,7 @@
     <filename>default.jpg</filename>
     <filename>placeholder.png</filename>
     <filename>index.html</filename>
+    <folder>slick</folder>
   </media>
   <updateservers>
     <server priority="2" type="extension" name="Injector Related updates"><![CDATA[https://raw.githubusercontent.com/arebalus/plg_content_injector_related/master/version.xml]]></server>
@@ -45,7 +46,7 @@
 			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_NUMBER_DESC"
 			default="3"
 			min="1"
-			max="5"
+			max="15"
 			step="1"
 			onchange=""
 		/>
@@ -147,6 +148,17 @@
 			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_CLASS_DESC"
 			showon="mode:div"
 		/>
+        <field 
+			type="radio" 
+			name="only-root" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_ONLY_ROOT_LABEL" 
+			default="1" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_ONLY_ROOT_DESC"
+			class="btn-group btn-group-yesno" 
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
 		<field
 			type="list"
 			name="location"
@@ -190,7 +202,7 @@
 			<option value="-10">PLG_CONTENT_INJECTOR_RELATED_M10</option>
 		</field>
       </fieldset>
-	  <fieldset name="advanced">
+	  <fieldset name="layout">
         <field
         	type="filelist"
         	name="layout"
@@ -202,7 +214,18 @@
         	hide_default="true"
         	filter=".php$"
 		 />
-		 <field 
+		<field
+			type="number"
+			name="max-items-in-slide"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_MAX_ITEMS_IN_SLIDE_LABEL"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_MAX_ITEMS_IN_SLIDE_DESC"
+			default="4"
+			min="1"
+			max="10"
+			step="1"
+			showon="layout:slick-carousel.php"
+		/>
+ 		 <field 
 		 	type="media"
 		 	name="default-image"
 		 	label="PLG_CONTENT_INJECTOR_RELATED_FIELD_DEFAULT_IMAGE_LABEL"
@@ -210,8 +233,38 @@
 		 	directory=""
 		 	preview="true"
 		 	default="media/plg_content_injector_related/default.jpg"
-		 	showon="layout:with-image.php"
+		 	showon="layout:with-image.php[OR]layout:slick-carousel.php"
 		 />
+		 <field
+		 	type="text"
+		 	name="image-height"
+		 	label="PLG_CONTENT_INJECTOR_RELATED_FIELD_IMAGE_HEIGHT_LABEL"
+		 	description="PLG_CONTENT_INJECTOR_RELATED_FIELD_IMAGE_HEIGHT_DESC"
+		 	default="120"
+		 	filter="integer"
+		 	showon="layout:with-image.php[OR]layout:slick-carousel.php"
+	 	/>
+        <field 
+			type="radio" 
+			name="single-line-title" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_SINGLE_LINE_TITLE_LABEL" 
+			default="1" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_SINGLE_LINE_TITLE_DESC"
+			class="btn-group btn-group-yesno" 
+			showon="layout:with-image.php[OR]layout:slick-carousel.php"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		 <field
+		 	type="text"
+		 	name="text-length"
+		 	label="PLG_CONTENT_INJECTOR_RELATED_FIELD_TEXT_LENGHT_LABEL"
+		 	description="PLG_CONTENT_INJECTOR_RELATED_FIELD_TEXT_LENGHT_DESC"
+		 	default="200"
+		 	filter="integer"
+		 	showon="layout:with-image.php[OR]layout:slick-carousel.php"
+	 	/>
 	  </fieldset> 
     </fields>
   </config>

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title>Injector Related - Documentation</title>
+	</head>
+	<body>
+		<div class="container">
+			<h2 id="documentation">Documentation</h2>
+			<h3 id="index">Index</h3>
+			<ul>
+				<li><a href="#general-params">General Params</a></li>
+				<li><a href="#placement-params">Placement Params</a></li>
+				<li><a href="#advanced-params">Advanced Params</a></li>
+				<li>
+					<a href="#override-configuration">Override Configuration</a>
+					<ul>
+						<li><a href="#syntax">Syntax</a></li>
+						<li><a href="#remarks">Remarks</a></li>
+						<li><a href="#attributes-table">Attributes Table</a></li>
+					</ul>
+				</li>
+				<li><a href="#override-design">Override Design</a></li>
+				<li>
+					<a href="#translations">Translations</a>
+					<ul>
+						<li><a href="#sharing-your-translations">Sharing Your Translations</a></li>
+					</ul>
+				</li>
+			</ul>
+			<h3 id="general-params">General Params</h3>
+			<ul>
+				<li><strong>By Default</strong>: Enable or Disable the plugin. This is different from publish/unpublish because this can be changed by the override syntax. </li>
+				<li><strong>Articles</strong>: The number of articles the plugin must place at the related content list.</li>
+				<li><strong>1st Relation</strong>: The first relation that an article must have with the shown one in order to be included in the related content list.</li>
+				<li><strong>2nd Relation</strong>: The second relation that an article must have with the shown one in order to be included in the related content list if not enough articles are found by the previous relation. If this parameter is set to None the no further relations will be included.</li>
+				<li><strong>3rd Relation</strong>: The third relation that an article must have with the shown one in order to be included in the related content list if not enough articles are found by the previous relation. If this parameter is set to None the no further relations will be included.</li>
+				<li><strong>4th Relation</strong>: The fourth relation that an article must have with the shown one in order to be included in the related content list if not enough articles are found by the previous relation.</li>
+			</ul>
+			<p><br /> <a href="#index"><img src="https://assets-cdn.github.com/images/icons/emoji/mag.png" alt=":mag:" title=":mag:" class="emoji" align="absmiddle" height="20" width="20"> Back to Index</a></p>
+			<h3 id="placement-params">Placement Params</h3>
+			<ul>
+				<li>
+					<strong>Categories Filter</strong>: The type of filter to be used to automatically select the content articles of such categories. 
+					<ul>
+						<li>If set to <em>&quot;Show at Selected&quot;</em>, then the plugin result will automatically be shown in all the content articles belonging to the categories <strong>explicitly</strong> listed in the <em>Categories List</em> parameter.</li>
+						<li>If set to <em>&quot;Hide from Selected&quot;</em> then the plugin result will automatically be shown in all the content articles which DO NOT belong to the categories <strong>explicitly</strong> listed in the in the <em>Categories List</em> parameter</li>
+						<li>If you want to activate the plugin result for all the categories, set this parameter to <em>&quot;Hide from Selected&quot;</em> and left <strong>empty</strong> the <em>Categories List</em> parameter.</li>
+					</ul>
+				</li>
+				<li><strong>Categories List</strong>: The explicit list of categories on which the plugin will be shown or hidden (as set in the <em>Categories Filter</em> parameter)</li>
+				<li>
+					<strong>Element</strong>: The HTML tag to count in order to find out the right placement for the plugin result, regardless of their content length.
+					<ul>
+						<li>Use <em>&quot;Paragraph&quot;</em> if most of your content articles use <code>&lt;p&gt;...&lt;/p&gt;</code> to organize their content blocks. In this case Class paramenter is irrelevant and will be hidden from the configuration screen.</li>
+						<li>Use <em>&quot;Division&quot;</em> if most of your content articles use <code>&lt;div&gt;...&lt;/div&gt;</code> to organize their content blocks. If you use <strong>nested divisions</strong>, like in the case of bootstrap, which uses them to generate a grid, then you should want to set the <em>Class</em> parameter.</li>
+					</ul>
+				</li>
+				<li><strong>Only at Root Level</strong>: It's advised to keep this param set to Yes, thus only tags at the root level are taken in account for the collocation of the related articles. Otherwise (setting this to No) will cause that every HTML tag is included in the calculations. For example, this may cause unexpected behavior if you have paragraphs in tables. However you might want to enable set this parameter to No in case of divisions with an specific class.
+				</li>
+				<li><strong>Class</strong>: Since the divisions <code>&lt;div&gt;...&lt;/div&gt;</code> can be nested within the HTML code, then it could be helpful to count only certain ones. So you can set the class of the divisions that will be counted to determine the right placement of the plugin result. </li>
+				<li><strong>Location</strong>: Set where in the content article text will be placed the plugin result. You can select <em>&quot;Top of Article&quot;</em>, <em>&quot;Bottom of Article&quot;</em> or <em>&quot;Middle of Article&quot;</em>. Regarding <em>&quot;Middle of Article&quot;</em>, you may use the <em>&quot;Position&quot;</em> paramenter in order to set more specifically the point of the article text to place the plugin result.</li>
+				<li>
+					<strong>Position</strong>: If the Location parameter is set to Middle, then you may want to fine-tune where in the middle of the content is placed the related articles list. Notice that Injector Related counts the number of HTML tags regardless of the ammount of text they may contain.
+					<ul>
+						<li>Center: the plugin will calculate the half of the HTML tags occurrence and inject the related articles list at such point.</li>
+						<li>After Xth element from top: the plugin will count the HTML tags starting from the top of the article and will inject the related articles list after such element. In case there are not enough elements, then the output will be placed after the last element.</li>
+						<li>Before Xth element from bottom: the plugin will count the HTML tags starting from the bottom of the article and will inject the related articles list before such element. In case there are not enough elements, then the output will be placed before the first element.</li>
+					</ul>
+				</li>
+			</ul>
+			<p><br /> <a href="#index"><img src="https://assets-cdn.github.com/images/icons/emoji/mag.png" alt=":mag:" title=":mag:" class="emoji" align="absmiddle" height="20" width="20"> Back to Index</a></p>
+			<h3 id="advanced-params">Layout Params</h3>
+			<ul>
+				<li><strong>Layout</strong>: Change the appearance of the plugin output choosing one of the available layouts.</li>
+				<li><strong>Max. Items in Slide</strong>: The number of content articles to be shown at once in a slider. Notice that the slider is responsive and automatically will reduce the number of shown articles at once, depending on the available width to display this content. Useful with slick-carousel.php ONLY.</li>
+				<li><strong>Default Image:</strong> Sets a default image to use in case there are not any image set as Intro Image or Full Text Image of from within the article body. Useful with with-image.php and slick-carousel.php ONLY.</li>
+				<li><strong>Image Height</strong>: Set the image height in pixels (only the integer value). Useful with with-image.php and slick-carousel.php ONLY.</li>
+				<li><strong>Single Line Title</strong>: Useful with with-image.php and slick-carousel.php ONLY.
+					<ul>
+						<li>Yes: The article's title will forced to fit one single row, cutting the overflow text and placing ellipsis to indicate that the text has been cutted.</li>
+						<li>No: The article's title will be shown in full, regardless the rows it may require to do so.</li>
+					</ul> 
+				</li>
+				<li><strong>Text Length</strong>: Set the maximum number of characters to display of the article's body. If you count the character it may not be exactly the fixed number, because only whole words will be included. Please notice that setting this parameter to 0 (zero) will hide the body text. Useful with with-image.php and slick-carousel.php ONLY.</li>
+			</ul>
+			<p><br /> <a href="#index"><img src="https://assets-cdn.github.com/images/icons/emoji/mag.png" alt=":mag:" title=":mag:" class="emoji" align="absmiddle" height="20" width="20"> Back to Index</a></p>
+			<h3 id="override-configuration">Override Configuration</h3>
+			<p>The global configuration set in the plugin configuration screen, may be overridden in a &quot;per-article basis&quot;. </p>
+			<h4 id="syntax">Syntax</h4>
+			<p>To do so, you must insert the plugin syntax at any point within the article content, preferably after the &quot;read more&quot; mark, as follows:</p>
+			<p><code>{injector_related attribute=value[ attribute=value[ attribute=value[...]]]}</code></p>
+			<h4 id="remarks">Remarks</h4>
+			<ul>
+				<li>the curly brackets {} must be present at the start and at the end of the instruction,</li>
+				<li>there must <strong>not</strong> be any space between the opening curly bracket and the <em>injector_related</em> keyword,</li>
+				<li>there must be a space after <em>injector_related</em>,</li>
+				<li>there must be at least one pair of <em>attribute</em> and <em>value</em> settings,</li>
+				<li>there must <strong>not</strong> be any space between the <em>attribute</em> name and the <em>equal sign</em>, same for the <em>equal sign</em> and the <em>value</em>,</li>
+				<li>there must <strong>not</strong> be any spaces in the <em>value</em></li>
+				<li>if more that one pair of <em>attribute</em> and <em>value</em> are set, then a space must separate them from the previous pair.</li>
+			</ul>
+			<h4 id="attributes-table">Attributes Table</h4>
+			<p>Use the table below to identify the <em>attribute</em> name for each parameter and its valid <em>values</em>:</p>
+			<table class="table table-striped">
+				<tr>
+					<th colspan="3">General Params</th>
+				</tr>
+				<tr>
+					<th>Param</th>
+					<th>Attribute</th>
+					<th>Valid values</th>
+				</tr>
+				<tr>
+					<td>By Default</td>
+					<td><em>enable</em></td>
+					<td><em>0</em> (zero) for disabled<br />        <em>1</em> (one) for enabled</td>
+				</tr>
+				<tr>
+					<td>Articles</td>
+					<td><em>number</em></td>
+					<td>Any integer between 1 and 15</td>
+				</tr>
+				<tr>
+					<td>1st Relation</td>
+					<td><em>relation1</em></td>
+					<td><em>key</em> - By Keywords <br />        <em>tag</em> - By Tags <br />        <em>cat</em> - By Category <br />        <em>aut</em> - By Author <br />    </td>
+				</tr>
+				<tr>
+					<td>2nd Relation</td>
+					<td><em>relation2</em></td>
+					<td><em>non</em> - None (disabled) <br />        <em>key</em> - By Keywords <br />        <em>tag</em> - By Tags <br />        <em>cat</em> - By Category <br />        <em>aut</em> - By Author <br />    </td>
+				</tr>
+				<tr>
+					<td>3rd Relation</td>
+					<td><em>relation3</em></td>
+					<td>        <em>non</em> - None (disabled) <br />        <em>key</em> - By Keywords <br />        <em>tag</em> - By Tags <br />        <em>cat</em> - By Category <br />        <em>aut</em> - By Author <br />    </td>
+				</tr>
+				<tr>
+					<td>4th Relation</td>
+					<td><em>relation4</em></td>
+					<td>        <em>non</em> - None (disabled) <br />        <em>key</em> - By Keywords <br />        <em>tag</em> - By Tags <br />        <em>cat</em> - By Category <br />        <em>aut</em> - By Author <br />    </td>
+				</tr>
+				<tr>
+					<th colspan="3">Placement Params</th>
+				</tr>
+				<tr>
+					<th>Param</th>
+					<th>Attribute</th>
+					<th>Valid values</th>
+				</tr>
+				<tr>
+					<td>Categories Filter</td>
+					<td><em>filter</em></td>
+					<td>IGNORED because once this instruction is found the plugin will be enabled/disabled (as defined by the <b>By Default</b> parameter set at the plugin global configuration or overwritten by this instruction) regardless of the category of the content article.</td>
+				</tr>
+				<tr>
+					<td>Categories List</td>
+					<td><em>categories</em></td>
+					<td>IGNORED because once this instruction is found the plugin will be enabled/disabled (as defined by the <b>By Default</b> parameter set at the plugin global configuration or overwritten by this instruction) regardless of the category of the content article.</td>
+				</tr>
+				<tr>
+					<td>Element</td>
+					<td><em>mode</em></td>
+					<td><em>p</em> - Paragraph <br />        <em>div</em> - Division <br />    </td>
+				</tr>
+				<tr>
+					<td>Class</td>
+					<td><em>class</em></td>
+					<td>any string <b>without</b> spaces</td>
+				</tr>
+				<tr>
+					<td>Only at Root Level</td>
+					<td><em>only-root</em></td>
+					<td><em>0</em> (zero) for No<br />        <em>1</em> (one) for Yes</td>
+				</tr>
+				<tr>
+					<td>Location</td>
+					<td><em>location</em></td>
+					<td><em>top</em> - Top of Article<br />        <em>bot</em> - Bottom of Article<br />        <em>mid</em> - Middle of Article<br />    </td>
+				</tr>
+				<tr>
+					<td>Position</td>
+					<td><em>position</em></td>
+					<td><em>center</em> - Centered<br />        <em>1</em> - After 1st element from top<br />        <em>2</em> - After 2nd element from top<br />        <em>3</em> - After 3rd element from top<br />        <em>4</em> - After 4th element from top<br />        <em>5</em> - After 5th element from top<br />        <em>6</em> - After 6th element from top<br />        <em>7</em> - After 7th element from top<br />        <em>8</em> - After 8th element from top<br />        <em>9</em> - After 9th element from top<br />        <em>10</em> - After 10th element from top<br />        <em>-1</em> - Before 1st element from bottom<br />        <em>-2</em> - Before 2nd element from bottom<br />        <em>-3</em> - Before 3rd element from bottom<br />        <em>-4</em> - Before 4th element from bottom<br />        <em>-5</em> - Before 5th element from bottom<br />        <em>-6</em> - Before 6th element from bottom<br />        <em>-7</em> - Before 7th element from bottom<br />        <em>-8</em> - Before 8th element from bottom<br />        <em>-9</em> - Before 9th element from bottom<br />        <em>-10</em> - Before 10th element from bottom<br />    </td>
+				</tr>
+				<tr>
+					<th colspan="3">Layout Params</th>
+				</tr>
+				<tr>
+					<th>Param</th>
+					<th>Attribute</th>
+					<th>Valid values</th>
+				</tr>
+				<tr>
+					<td>Layout</td>
+					<td><em>layout</em></td>
+					<td>an existent layout file name (i.e. <em>default.php</em>)</td>
+				</tr>
+				<tr>
+					<td>Max. Items in Slide</td>
+					<td><em>max-items-in-slide</em></td>
+					<td>Any integer between 1 and 10</td>
+				</tr>
+				<tr>
+					<td>Default Image</td>
+					<td><em>default-image</em></td>
+					<td>URL of a valid image (no spaces allowed)</td>
+				</tr>
+				<tr>
+					<td>Image Height</td>
+					<td><em>image-height</em></td>
+					<td>Any positive integer</td>
+				</tr>
+				<tr>
+					<td>Single Line Title</td>
+					<td><em>single-line-title</em></td>
+					<td><em>0</em> (zero) for No<br />        <em>1</em> (one) for Yes</td>
+				</tr>
+				<tr>
+					<td>Text Length</td>
+					<td><em>text-length</em></td>
+					<td>Any positive integer or<br />
+						0 (zero) to disable this feature
+					</td>
+				</tr>
+			</table>
+			<p><br /> <a href="#index"><img src="https://assets-cdn.github.com/images/icons/emoji/mag.png" alt=":mag:" title=":mag:" class="emoji" align="absmiddle" height="20" width="20"> Back to Index</a></p>
+			<h3 id="override-design">Override Design</h3>
+			<p>Since the Injector Related is a content plugin, I&#39;m sure you may want to customize its appearance at the point it renders the related articles list. So, yes, the plugin is ready for layout overrides and you may follow the instructions at the Joomla documentation on <a href="https://docs.joomla.org/Layout_Overrides_in_Joomla#Plugin_Alternative_Layouts_.28Overriding_a_Plugin.29">Layout Overrides</a> to override the default template.</p>
+			<p><br /> <a href="#index"><img src="https://assets-cdn.github.com/images/icons/emoji/mag.png" alt=":mag:" title=":mag:" class="emoji" align="absmiddle" height="20" width="20"> Back to Index</a></p>
+			<h3 id="translations">Translations</h3>
+			<p>If not included, Injector Related can be fully translated to any language that your Joomla website has installed.</p>
+			<p>In accordance with the Joomla documentation regarding <a href="https://docs.joomla.org/Specification_of_language_files#Language_file_naming_conventions_and_precedence">Language  Files Conventions</a> and the <a href="https://docs.joomla.org/Language_Guidelines_for_3rd_Party_Extensions">Language Guidelines for 3rd Party Extensions</a>, all the plugin language files are stored &quot;local&quot; within the plugin foolder, in example:</p>
+			<p><code>JOOMLA_ROOT/plugins/content/injector_related/language</code></p>
+			<p>To create a new translation, create the new folder xx-XX (<em>this is the language code for your translation</em>) within the language folder as follows:</p>
+			<p><code>JOOMLA_ROOT/plugins/content/injector_related/language/xx-XX</code></p>
+			<p>Create the <strong>new language files</strong> like:</p>
+			<p><code>JOOMLA_ROOT/plugins/content/injector_related/language/xx-XX/xx-XX.plg_content_injector_related.ini<br />
+JOOMLA_ROOT/plugins/content/injector_related/language/xx-XX/xx-XX.plg_content_injector_related.sys.ini</code></p>
+			<p>Then you can copy the content of both files from the originals at:</p>
+			<p><code>JOOMLA_ROOT/plugins/content/injector_related/language/en-GB/en-GB.plg_content_injector_related.ini<br />
+JOOMLA_ROOT/plugins/content/injector_related/language/en-GB/en-GB.plg_content_injector_related.sys.ini</code></p>
+			<p>Once you have copied the content of the original files to the <strong>new language files</strong>, you can translate them and save your changes. Now, you can see the plugin in your own language.</p>
+			<h4 id="sharing-your-translations">Sharing Your Translations</h4>
+			<p>If you have translated the plugin to your own language and you want to share your translation, please contact me as stated in the <a href="#support">Support</a> area. I would be glad to credit your work at the <a href="#credits">Credits</a> section of this documentation.</p>
+			<p><br /> <a href="#index"><img src="https://assets-cdn.github.com/images/icons/emoji/mag.png" alt=":mag:" title=":mag:" class="emoji" align="absmiddle" height="20" width="20"> Back to Index</a></p>
+		</div>
+	</body>
+</html>
+

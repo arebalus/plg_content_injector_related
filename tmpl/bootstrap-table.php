@@ -1,6 +1,6 @@
 <?php 
 /**
- * @Project   Content - Injector Related 1.1
+ * @Project   Content - Injector Related 1.2
  * @author    Magnus Arebalus
  * @email     arebalus.NO.SPAM@gmail.com
  * @website   github.com/arebalus

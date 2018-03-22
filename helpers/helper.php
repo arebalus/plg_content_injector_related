@@ -1,6 +1,6 @@
 <?php 
 /**
- * @Project   Content - Injector Related 1.1
+ * @Project   Content - Injector Related 1.2
  * @author    Magnus Arebalus
  * @email     arebalus.NO.SPAM@gmail.com
  * @website   github.com/arebalus
@@ -33,7 +33,7 @@ class plgContentInjector_relatedHelper
 		
 		if (is_null($globalConfig))
 		{
-			$globalConfig	= self::_validateConfig((array)json_decode($params->__toString()));
+			$globalConfig	= self::_getGlobalConfig($params);
 		}
 		if (!isset($config[$article->id]))
 		{
@@ -249,6 +249,15 @@ class plgContentInjector_relatedHelper
 						$chkCls	= $clsLen > 0;
 						for ($i=0,$j=$tags->length;$i<$j;$i++)
 						{
+							if ($config['only-root'] == 1)
+							{
+								$parent = $tags->item($i)->parentNode;
+								$child	= $dom->getElementsByTagName('div')->item(0);
+								if ($parent !== $child)
+								{
+									continue;
+								}
+							}
 							if ($chkCls)
 							{
 								$tag	= $tags->item($i);
@@ -336,11 +345,13 @@ class plgContentInjector_relatedHelper
     		switch ($k)
     		{
     			case 'enable':
-    				$valid['enable'] = ($v == '0') ? '0' : '1';
+    			case 'only-root':
+    			case 'single-line-title':
+    				$valid[$k] = ($v == '0') ? '0' : '1';
 					break;
 				case 'number':
 					$v = intval($v);
-					$valid['number'] = ($v >= 1 && $v <= 5) ? $v : 3;
+					$valid['number'] = ($v >= 1 && $v <= 15) ? $v : 3;
 					break;
 				case 'relation1':
 					$valid['relation1'] = in_array($v,array('key','tag','cat','aut')) ? $v : 'key';
@@ -366,17 +377,37 @@ class plgContentInjector_relatedHelper
 													) ? $v : 'center';
 					break;
 				case 'categories':
-					$valid['categories'] = is_array($v) ? $v : explode(',',$v);
+					$v = is_array($v) ? $v : explode(',',$v);
+					for ($i=0,$n=count($v);$i<$n;$i++)
+					{
+						if ($v[$i] != intval($v[$i]))
+						{
+							unset($v[$i]);
+						}
+					}
+					$valid['categories'] = $v;
 					break;
 				case 'class':
 					$valid['class'] = $v;
 					break;
 				case 'layout':
+					
+					if (
+							!file_exists(JPATH_SITE.'/plugins/content/injector_related/tmpl/'.$v)
+						&&	!file_exists(JPATH_SITE.'/templates/'.JFactory::getApplication()->getTemplate().'/html/plg_content_injector_related/'.$v)
+						)
+					{
+						$v = 'default';
+					}
 					if (substr($v,-4)=='.php')
 					{
 						$v=substr($v,0,strlen($v)-4);
 					}
 					$valid['layout'] = $v;
+					break;
+				case 'max-items-in-slide':
+					$v = intval($v);
+					$valid['max-items-in-slide'] = ($v >= 1 && $v <= 10) ? $v : 4;
 					break;
 				case 'default-image':
 					if (
@@ -384,10 +415,23 @@ class plgContentInjector_relatedHelper
 						&&	file_exists(JPATH_ROOT.'/'.$v)
 						)
 					{
-						$valid['default-image'] = JUri::base(true).'/'.$v;
+						$valid['default-image'] = JUri::base(false).'/'.$v;
 					}
-					
+					else
+					{
+						$valid['default-image'] = JUri::base(false).'/media/plg_content_injector_related/default.jpg';
+					}
+					break;
+				case 'image-height':
+					$v = intval($v);
+					$valid[$k] = $v > 0 ? $v : 120;
+					break;
+				case 'text-length':
+					$v = intval($v);
+					$valid[$k] = $v >= 0 ? $v : 200;
+					break;
 				default:
+					# None other parameter is accepted.
 					break;
     		}
     	}
@@ -442,5 +486,93 @@ class plgContentInjector_relatedHelper
     	}
     	return $config;
     }
+    
+    public static function cleanText($text,$lenght)
+    {
+    	# Remove plugins syntax
+		if (preg_match_all('/\{[^\}]{1,}\}/si',$text,$MATCHES))
+    	{
+    		if (isset($MATCHES[0]) && is_array($MATCHES[0]) && count($MATCHES[0]))
+    		{
+    			foreach($MATCHES[0] as $match)
+    			{
+    				$text = str_replace($match,'',$text);
+    			}
+    		}
+    	}
+    	
+		# Remove HTML tags
+    	$text = strip_tags($text);
+    	
+    	# Convert HTML Entities
+    	$text = html_entity_decode($text,ENT_NOQUOTES,'UTF-8');
+    	
+    	# Remove format characters
+		$text = str_replace(array("\r","\n","\t",'&nbsp;'),' ',$text);
+    	
+    	# Remove doble spaces
+		while (strpos($text,'  ') !== false)
+    	{
+    		$text = str_replace('  ',' ',$text);
+    	}
+    	
+    	# Build the return without truncate words
+		$words = explode(' ',$text);
+    	$return = '';
+    	if (is_array($words) && count($words))
+    	{
+    		$return = $words[0];
+			$i=0;
+    		while(strlen($return.' '.$words[$i+1])<$lenght)
+    		{
+    			$return .= ' '.$words[$i+1];
+    			$i++;
+    		}
+    		if ($i < count($words))
+    		{
+    			$return .= '&nbsp;&hellip;';
+    		}
+    	}
+    	return $return;
+    }
+    
+    private static function _getGlobalConfig(&$params)
+    {
+    	static $config = null;
+    	
+    	if (is_null($config))
+    	{
+    		$config = array();
+    		
+    		# Basic params
+    		$config['enable'] = $params->get('enable','1');
+    		$config['number'] = $params->get('number','3');
+    		$config['relation1'] = $params->get('relation1','key');
+    		$config['relation2'] = $params->get('relation2','non');
+    		$config['relation3'] = $params->get('relation3','non');
+    		$config['relation4'] = $params->get('relation4','non');
+    		
+    		# Where params
+    		$config['filter'] = $params->get('filter','exc');
+    		$config['categories'] = $params->get('categories','');
+    		$config['mode'] = $params->get('mode','p');
+    		$config['class'] = $params->get('class','');
+    		$config['only-root'] = $params->get('only-root',1);
+    		$config['location'] = $params->get('location','mid');
+    		$config['position'] = $params->get('position','center');
+    		
+    		# Layout params
+    		$config['layout'] = $params->get('layout','default.php');
+    		$config['max-items-in-slide'] = $params->get('max-items-in-slide','4');
+    		$config['default-image'] = $params->get('default-image','media/plg_content_injector_related/default.jpg');
+    		$config['image-height'] = $params->get('image-height','120');
+    		$config['single-line-title'] = $params->get('single-line-title','1');
+    		$config['text-length'] = $params->get('text-length','200');
+    		
+    		$config = self::_validateConfig($config);
+    	}
+    	return $config;
+    }
+    
 }
 
