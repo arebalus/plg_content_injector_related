@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<title>Injector Related - Documentation</title>
+		<title>Injector Related 1.3 - Documentation</title>
 	</head>
 	<body>
 		<div class="container">
@@ -58,9 +58,8 @@
 						<li>Use <em>&quot;Division&quot;</em> if most of your content articles use <code>&lt;div&gt;...&lt;/div&gt;</code> to organize their content blocks. If you use <strong>nested divisions</strong>, like in the case of bootstrap, which uses them to generate a grid, then you should want to set the <em>Class</em> parameter.</li>
 					</ul>
 				</li>
-				<li><strong>Only at Root Level</strong>: It's advised to keep this param set to Yes, thus only tags at the root level are taken in account for the collocation of the related articles. Otherwise (setting this to No) will cause that every HTML tag is included in the calculations. For example, this may cause unexpected behavior if you have paragraphs in tables. However you might want to enable set this parameter to No in case of divisions with an specific class.
-				</li>
 				<li><strong>Class</strong>: Since the divisions <code>&lt;div&gt;...&lt;/div&gt;</code> can be nested within the HTML code, then it could be helpful to count only certain ones. So you can set the class of the divisions that will be counted to determine the right placement of the plugin result. </li>
+				<li><strong>Only at Root Level</strong>: It's advised to keep this param set to Yes, thus only tags at the root level are taken in account for the collocation of the related articles. Otherwise (setting this to No) will cause that every HTML tag is included in the calculations. For example, this may cause unexpected behavior if you have paragraphs in tables. However you might want to enable set this parameter to No in case of divisions with an specific class.</li>
 				<li><strong>Location</strong>: Set where in the content article text will be placed the plugin result. You can select <em>&quot;Top of Article&quot;</em>, <em>&quot;Bottom of Article&quot;</em> or <em>&quot;Middle of Article&quot;</em>. Regarding <em>&quot;Middle of Article&quot;</em>, you may use the <em>&quot;Position&quot;</em> paramenter in order to set more specifically the point of the article text to place the plugin result.</li>
 				<li>
 					<strong>Position</strong>: If the Location parameter is set to Middle, then you may want to fine-tune where in the middle of the content is placed the related articles list. Notice that Injector Related counts the number of HTML tags regardless of the ammount of text they may contain.
@@ -77,14 +76,39 @@
 				<li><strong>Layout</strong>: Change the appearance of the plugin output choosing one of the available layouts.</li>
 				<li><strong>Max. Items in Slide</strong>: The number of content articles to be shown at once in a slider. Notice that the slider is responsive and automatically will reduce the number of shown articles at once, depending on the available width to display this content. Useful with slick-carousel.php ONLY.</li>
 				<li><strong>Default Image:</strong> Sets a default image to use in case there are not any image set as Intro Image or Full Text Image of from within the article body. Useful with with-image.php and slick-carousel.php ONLY.</li>
-				<li><strong>Image Height</strong>: Set the image height in pixels (only the integer value). Useful with with-image.php and slick-carousel.php ONLY.</li>
+				<li><strong>Image Height</strong>: Set the image height in pixels (only the integer value). Setting this parameter to 0 (zero) will hide the image. Useful with with-image.php and slick-carousel.php ONLY.</li>
+				<li><strong>Linked Image</strong>: Useful with with-image.php and slick-carousel.php ONLY.
+					<ul>
+						<li>Yes: A link to the related article will be added to the image.</li>
+						<li>No: Only the image will be rendered and clicking on it will not lead to the related article.</li>
+					</ul> 
+				</li>
+				<li><strong>Title Color</strong>: Set the color (in Hex format) for title section, regardless if it is linked or not. Set this to empty to use the website default style. Useful with with-image.php and slick-carousel.php ONLY.</li>
+				<li><strong>Uppercase Title</strong>: Useful with with-image.php and slick-carousel.php ONLY.
+					<ul>
+						<li>Yes: Text of title will be transformed to uppercase characters using CSS style.</li>
+						<li>No: Text of title remains unchanged from the stored in the database..</li>
+					</ul> 
+				</li>
 				<li><strong>Single Line Title</strong>: Useful with with-image.php and slick-carousel.php ONLY.
 					<ul>
 						<li>Yes: The article's title will forced to fit one single row, cutting the overflow text and placing ellipsis to indicate that the text has been cutted.</li>
 						<li>No: The article's title will be shown in full, regardless the rows it may require to do so.</li>
 					</ul> 
 				</li>
+				<li><strong>Linked Title</strong>: Useful with with-image.php and slick-carousel.php ONLY.
+					<ul>
+						<li>Yes: A link to the related article will be added to the title text.</li>
+						<li>No: Only the title text will be rendered and clicking on it will not lead to the related article.</li>
+					</ul> 
+				</li>
+				<li><strong>Title Font Size</strong>: Set the title font size in pixels (only the integer value). Useful with with-image.php and slick-carousel.php ONLY.</li>
+				<li><strong>Title Margin Up</strong>: Set the space above the title text in pixels (only the integer value). Useful with with-image.php and slick-carousel.php ONLY.</li>
+				<li><strong>Title Margin Down</strong>: Set the space below the title text in pixels (only the integer value). Useful with with-image.php and slick-carousel.php ONLY.</li>
 				<li><strong>Text Length</strong>: Set the maximum number of characters to display of the article's body. If you count the character it may not be exactly the fixed number, because only whole words will be included. Please notice that setting this parameter to 0 (zero) will hide the body text. Useful with with-image.php and slick-carousel.php ONLY.</li>
+				<li><strong>Text Color</strong>: Set the color (in Hex format) for text section. Set this to empty to use the website default style. Useful with with-image.php and slick-carousel.php ONLY.</li>
+				<li><strong>Text Font Size</strong>: Set the text font size in pixels (only the integer value). Useful with with-image.php and slick-carousel.php ONLY.</li>
+				<li><strong>Text Margin Bottom</strong>: Set the space below the related article body text in pixels (only the integer value). Useful with slick-carousel.php ONLY.</li>
 			</ul>
 			<p><br /> <a href="#index"><img src="https://assets-cdn.github.com/images/icons/emoji/mag.png" alt=":mag:" title=":mag:" class="emoji" align="absmiddle" height="20" width="20"> Back to Index</a></p>
 			<h3 id="override-configuration">Override Configuration</h3>
@@ -109,8 +133,8 @@
 					<th colspan="3">General Params</th>
 				</tr>
 				<tr>
-					<th>Param</th>
-					<th>Attribute</th>
+					<th style="width: 25%;">Param</th>
+					<th style="width: 25%;">Attribute</th>
 					<th>Valid values</th>
 				</tr>
 				<tr>
@@ -136,12 +160,12 @@
 				<tr>
 					<td>3rd Relation</td>
 					<td><em>relation3</em></td>
-					<td>        <em>non</em> - None (disabled) <br />        <em>key</em> - By Keywords <br />        <em>tag</em> - By Tags <br />        <em>cat</em> - By Category <br />        <em>aut</em> - By Author <br />    </td>
+					<td><em>non</em> - None (disabled) <br />        <em>key</em> - By Keywords <br />        <em>tag</em> - By Tags <br />        <em>cat</em> - By Category <br />        <em>aut</em> - By Author <br />    </td>
 				</tr>
 				<tr>
 					<td>4th Relation</td>
 					<td><em>relation4</em></td>
-					<td>        <em>non</em> - None (disabled) <br />        <em>key</em> - By Keywords <br />        <em>tag</em> - By Tags <br />        <em>cat</em> - By Category <br />        <em>aut</em> - By Author <br />    </td>
+					<td><em>non</em> - None (disabled) <br />        <em>key</em> - By Keywords <br />        <em>tag</em> - By Tags <br />        <em>cat</em> - By Category <br />        <em>aut</em> - By Author <br />    </td>
 				</tr>
 				<tr>
 					<th colspan="3">Placement Params</th>
@@ -212,7 +236,23 @@
 				<tr>
 					<td>Image Height</td>
 					<td><em>image-height</em></td>
-					<td>Any positive integer</td>
+					<td>Any positive integer or<br />
+						0 (zero) to disable this feature</td>
+				</tr>
+				<tr>
+					<td>Linked Image</td>
+					<td><em>linked-image</em></td>
+					<td><em>0</em> (zero) for No<br />        <em>1</em> (one) for Yes</td>
+				</tr>
+				<tr>
+					<td>Title Color</td>
+					<td><em>color-title</em></td>
+					<td>Any color in hex format like #777777 (don't omit the # symbol).</td>
+				</tr>
+				<tr>
+					<td>Uppercase Title</td>
+					<td><em>uppercase-title</em></td>
+					<td><em>0</em> (zero) for No<br />        <em>1</em> (one) for Yes</td>
 				</tr>
 				<tr>
 					<td>Single Line Title</td>
@@ -220,11 +260,46 @@
 					<td><em>0</em> (zero) for No<br />        <em>1</em> (one) for Yes</td>
 				</tr>
 				<tr>
+					<td>Linked Title</td>
+					<td><em>linked-title</em></td>
+					<td><em>0</em> (zero) for No<br />        <em>1</em> (one) for Yes</td>
+				</tr>
+				<tr>
+					<td>Title Font Size</td>
+					<td><em>font-size-title</em></td>
+					<td>Any integer between 5 and 50</td>
+				</tr>
+				<tr>
+					<td>Title Margin Up</td>
+					<td><em>margin-up-title</em></td>
+					<td>Any integer between 1 and 50</td>
+				</tr>
+				<tr>
+					<td>Title Margin Down</td>
+					<td><em>margin-down-title</em></td>
+					<td>Any integer between 1 and 50</td>
+				</tr>
+				<tr>
 					<td>Text Length</td>
 					<td><em>text-length</em></td>
 					<td>Any positive integer or<br />
 						0 (zero) to disable this feature
 					</td>
+				</tr>
+				<tr>
+					<td>Text Color</td>
+					<td><em>text-color</em></td>
+					<td>Any color in hex format like #777777 (don't omit the # symbol)</td>
+				</tr>
+				<tr>
+					<td>Text Font Size</td>
+					<td><em>text-font-size</em></td>
+					<td>Any integer between 5 and 50</td>
+				</tr>
+				<tr>
+					<td>Text Margin Bottom</td>
+					<td><em>margin-bottom-text</em></td>
+					<td>Any integer between 1 and 50</td>
 				</tr>
 			</table>
 			<p><br /> <a href="#index"><img src="https://assets-cdn.github.com/images/icons/emoji/mag.png" alt=":mag:" title=":mag:" class="emoji" align="absmiddle" height="20" width="20"> Back to Index</a></p>

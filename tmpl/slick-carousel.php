@@ -1,6 +1,6 @@
 <?php 
 /**
- * @Project   Content - Injector Related 1.2
+ * @Project   Content - Injector Related 1.3
  * @author    Magnus Arebalus
  * @email     arebalus.NO.SPAM@gmail.com
  * @website   github.com/arebalus
@@ -12,8 +12,11 @@
 defined( '_JEXEC' ) or die();
 
 
-$image_height	= intval($config['image-height']) > 0 ? intval($config['image-height']) : 120;
-$text_lenght	= intval($config['text-length']) > 0 ? intval($config['text-length']) : 0;
+$image_height	= intval($config['image-height']) >= 0 ? intval($config['image-height']) : 120;
+$text_lenght	= intval($config['text-length']) >= 0 ? intval($config['text-length']) : 0;
+$title_uppercase= intval($config['uppercase-title']) == 1 ? 'text-transform:uppercase; ' : '' ;
+
+
 $slides			= (count($rows)) >= $config['max-items-in-slide'] ? $config['max-items-in-slide'] : count($rows) ;
 $slides_1024	= ($slides - 1) > 0 ? $slides - 1 : 1 ;
 $slides_600		= ($slides_1024 - 1) > 0 ? $slides_1024 - 1 : 1 ; 
@@ -66,18 +69,25 @@ $style = ".injector-related-slider{margin:50px 0;clear:both;"
 		.".injector-related-slider *{height:auto; min-width: 0;min-height: 0;}"
 		.".injector-related-slider:after,{visibility: hidden;display: block;font-size: 0;content: \" \";clear: both;height: 0;} "
 		.".injector-related-image{width:100%;background-position:center center;background-size: cover; } "
-		.".injector-related-image a img{width:100%; height:{$image_height}px !important;} "
+		.".injector-related-image img, .injector-related-image a img{width:100%; height:{$image_height}px !important;border:0;} "
 		.".injector-related-slider-parent{  padding: 20px 30px;}"
 		.".injector-related-slider-item{padding:0 5px;}"
-		.".injector-related-text{font-size:0.8em;line-height:1.1em;text-align:justify;color:#777;}"
+		.".injector-related-text{font-size:{$config['text-font-size']}px;line-height:1.1em;text-align:justify;color:{$config['text-color']};margin-bottom:{$config['margin-bottom-text']}px;}"
 		;
+if (strlen($config['color-title']))
+{
+	$style .= ".injector-related-title{color:{$config['color-title']};}"
+			.".injector-related-title a{color:{$config['color-title']};}"
+	;
+	
+}
 if ($config['single-line-title'] == '1')
 {
-	$style .= ".injector-related-title{text-transform:uppercase; font-size:0.8em; font-weight:bold; overflow: hidden; position: relative; text-overflow: ellipsis; white-space: nowrap;margin:20px 0 10px 0;} "; 
+	$style .= ".injector-related-title{{$title_uppercase}font-size:{$config['font-size-title']}px; font-weight:bold;line-height:1.2em; overflow: hidden; position: relative; text-overflow: ellipsis; white-space: nowrap;margin:{$config['margin-up-title']}px 0 {$config['margin-down-title']}px 0;} "; 
 }
 else
 {
-	$style .= ".injector-related-title{text-transform:uppercase; font-size:0.8em; font-weight:bold; line-height:1.2em;margin:20px 0 10px 0;} ";
+	$style .= ".injector-related-title{{$title_uppercase}font-size:{$config['font-size-title']}px; font-weight:bold; line-height:1.2em;margin:{$config['margin-up-title']}px 0 {$config['margin-down-title']}px 0;} ";
 }
 JFactory::getDocument()->addStyleDeclaration($style);
 
@@ -94,7 +104,9 @@ JFactory::getDocument()->addStyleDeclaration($style);
 		<div class="injector-related-slick">
 		<?php foreach($rows as $row):?>
 			<div class="injector-related-slider-item">
+		<?php if ($image_height > 0): ?>
 		<div class="injector-related-image" style="background-image: url('<?php echo $row->image;?>');">
+			<?php if ($config['linked-image']) :?>
 			<a 
 				href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$row->id.'&catid='.$row->catid);?>"
 				title="<?php echo $row->title; ?>"
@@ -102,13 +114,25 @@ JFactory::getDocument()->addStyleDeclaration($style);
 					src="<?php echo JUri::base(false);?>/media/plg_content_injector_related/placeholder.png"
 					alt="<?php echo $row->title; ?>" 
 					title="<?php echo $row->title; ?>"
-				/></a>		
+				/></a>
+			<?php else :?>
+				<img 
+					src="<?php echo JUri::base(false);?>/media/plg_content_injector_related/placeholder.png"
+					alt="<?php echo $row->title; ?>" 
+					title="<?php echo $row->title; ?>"
+				/>
+			<?php endif; ?>
 		</div>
+		<?php endif; ?>
 		<div class="injector-related-title">
+			<?php if ($config['linked-title']) : ?>
 			<span><a 
 					href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$row->id.'&catid='.$row->catid);?>"
 					title="<?php echo $row->title; ?>"
 					><?php echo $row->title; ?></a></span>
+			<?php else : ?>
+			<span><?php echo $row->title; ?></span>
+			<?php endif; ?>
 		</div>
 		<?php if ($text_lenght): ?>
 		<div class="injector-related-text">

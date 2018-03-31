@@ -1,6 +1,6 @@
 <?php 
 /**
- * @Project   Content - Injector Related 1.2
+ * @Project   Content - Injector Related 1.3
  * @author    Magnus Arebalus
  * @email     arebalus.NO.SPAM@gmail.com
  * @website   github.com/arebalus
@@ -13,6 +13,8 @@ defined( '_JEXEC' ) or die();
 
 JHtml::_('bootstrap.framework');
 JHtmlBootstrap::loadCss();
+
+$color	= strlen($config['color-title']) ? " style=\"color:{$config['color-title']}\"" : '';
 
 
 # **************************************************
@@ -32,7 +34,7 @@ JHtmlBootstrap::loadCss();
 		<?php foreach($rows as $row):?>
 			 <tr>
 			 	<td>
-		 			<a href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$row->id.'&catid='.$row->catid);?>"><?php echo $row->title; ?></a>
+		 			<a href="<?php echo JRoute::_('index.php?option=com_content&view=article&id='.$row->id.'&catid='.$row->catid);?>"<?php echo $color; ?>><?php echo $row->title; ?></a>
 			 	</td>
 			 </tr>
 		<?php endforeach; ?>

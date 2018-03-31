@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.4" type="plugin" group="content" method="upgrade">
   <name>plg_content_injector_related</name>
-  <version>1.2</version>
+  <version>1.3</version>
   <creationDate>March 17th, 2018</creationDate>
   <description>PLG_CONTENT_INJECTOR_RELATED_XML_DESCRIPTION</description>
   <author>Magnus Arebalus</author>
@@ -21,6 +21,8 @@
     <filename>placeholder.png</filename>
     <filename>index.html</filename>
     <folder>slick</folder>
+    <folder>js</folder>
+    <folder>css</folder>
   </media>
   <updateservers>
     <server priority="2" type="extension" name="Injector Related updates"><![CDATA[https://raw.githubusercontent.com/arebalus/plg_content_injector_related/master/version.xml]]></server>
@@ -40,7 +42,7 @@
 			<option value="0">JDISABLED</option>
 		</field>
 		<field
-			type="number"
+			type="range"
 			name="number"
 			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_NUMBER_LABEL"
 			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_NUMBER_DESC"
@@ -49,6 +51,7 @@
 			max="15"
 			step="1"
 			onchange=""
+			class="injector-range"
 		/>
         <field 
 			type="list" 
@@ -213,9 +216,9 @@
         	hide_none="true"
         	hide_default="true"
         	filter=".php$"
-		 />
+		/>
 		<field
-			type="number"
+			type="range"
 			name="max-items-in-slide"
 			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_MAX_ITEMS_IN_SLIDE_LABEL"
 			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_MAX_ITEMS_IN_SLIDE_DESC"
@@ -223,9 +226,17 @@
 			min="1"
 			max="10"
 			step="1"
+			class="injector-range"
 			showon="layout:slick-carousel.php"
 		/>
- 		 <field 
+		<field 
+			type="spacer" 
+			name="space-image" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_SPACER_IMAGE_LABEL" 
+			class="text-error"
+			showon="layout:with-image.php[OR]layout:slick-carousel.php" 
+		/>
+ 		<field 
 		 	type="media"
 		 	name="default-image"
 		 	label="PLG_CONTENT_INJECTOR_RELATED_FIELD_DEFAULT_IMAGE_LABEL"
@@ -234,8 +245,8 @@
 		 	preview="true"
 		 	default="media/plg_content_injector_related/default.jpg"
 		 	showon="layout:with-image.php[OR]layout:slick-carousel.php"
-		 />
-		 <field
+		/>
+	 	<field
 		 	type="text"
 		 	name="image-height"
 		 	label="PLG_CONTENT_INJECTOR_RELATED_FIELD_IMAGE_HEIGHT_LABEL"
@@ -244,6 +255,44 @@
 		 	filter="integer"
 		 	showon="layout:with-image.php[OR]layout:slick-carousel.php"
 	 	/>
+        <field 
+			type="radio" 
+			name="linked-image" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_LINKED_IMAGE_LABEL" 
+			default="1" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_LINKED_IMAGE_DESC"
+			class="btn-group btn-group-yesno" 
+			showon="layout:with-image.php[OR]layout:slick-carousel.php"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+	 	<field 
+		 	type="spacer" 
+			name="space-title" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_SPACER_TITLE_LABEL" 
+			class="text-error"
+			showon="layout:with-image.php[OR]layout:slick-carousel.php" 
+		/>
+		<field
+			type="color"
+			name="color-title"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_COLOR_TITLE_LABEL"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_COLOR_TITLE_LABEL"
+			default="" 
+		/>
+        <field 
+			type="radio" 
+			name="uppercase-title" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_UPPERCASE_TITLE_LABEL" 
+			default="1" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_UPPERCASE_TITLE_DESC"
+			class="btn-group btn-group-yesno" 
+			showon="layout:with-image.php[OR]layout:slick-carousel.php"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
         <field 
 			type="radio" 
 			name="single-line-title" 
@@ -256,7 +305,65 @@
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
-		 <field
+        <field 
+			type="radio" 
+			name="linked-title" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_LINKED_TITLE_LABEL" 
+			default="1" 
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_LINKED_TITLE_DESC"
+			class="btn-group btn-group-yesno" 
+			showon="layout:with-image.php[OR]layout:slick-carousel.php"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+			type="range"
+			name="font-size-title"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_FONT_SIZE_TITLE_LABEL"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_FONT_SIZE_TITLE_DESC"
+			default="11"
+			min="5"
+			max="50"
+			step="1"
+			onchange=""
+			class="injector-range"
+		 	showon="layout:with-image.php[OR]layout:slick-carousel.php"
+		/>
+		<field
+			type="range"
+			name="margin-up-title"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_MARGIN_UP_TITLE_LABEL"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_MARGIN_UP_TITLE_DESC"
+			default="10"
+			min="1"
+			max="50"
+			step="1"
+			onchange=""
+			class="injector-range"
+		 	showon="layout:with-image.php[OR]layout:slick-carousel.php"
+		/>
+		<field
+			type="range"
+			name="margin-down-title"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_MARGIN_DOWN_TITLE_LABEL"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_MARGIN_DOWN_TITLE_DESC"
+			default="10"
+			min="1"
+			max="50"
+			step="1"
+			onchange=""
+			class="injector-range"
+		 	showon="layout:with-image.php[OR]layout:slick-carousel.php"
+		/>
+		<field 
+			type="spacer" 
+			name="space-text" 
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_SPACER_TEXT_LABEL" 
+			class="text-error"
+			showon="layout:with-image.php[OR]layout:slick-carousel.php" 
+		/>
+		<field
 		 	type="text"
 		 	name="text-length"
 		 	label="PLG_CONTENT_INJECTOR_RELATED_FIELD_TEXT_LENGHT_LABEL"
@@ -265,6 +372,40 @@
 		 	filter="integer"
 		 	showon="layout:with-image.php[OR]layout:slick-carousel.php"
 	 	/>
+		<field
+			type="color"
+			name="text-color"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_TEXT_COLOR_LABEL"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_TEXT_COLOR_LABEL"
+			default="" 
+			showon="layout:with-image.php[OR]layout:slick-carousel.php"
+		/>
+		<field
+			type="range"
+			name="text-font-size"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_TEXT_FONT_SIZE_LABEL"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_TEXT_FONT_SIZE_DESC"
+			default="11"
+			min="5"
+			max="50"
+			step="1"
+			onchange=""
+			class="injector-range"
+		 	showon="layout:with-image.php[OR]layout:slick-carousel.php"
+		/>
+		<field
+			type="range"
+			name="margin-bottom-text"
+			label="PLG_CONTENT_INJECTOR_RELATED_FIELD_MARGIN_BOTTOM_TEXT_LABEL"
+			description="PLG_CONTENT_INJECTOR_RELATED_FIELD_MARGIN_BOTTOM_TEXT_DESC"
+			default="10"
+			min="1"
+			max="50"
+			step="1"
+			onchange=""
+			class="injector-range"
+		 	showon="layout:slick-carousel.php"
+		/>
 	  </fieldset> 
     </fields>
   </config>
